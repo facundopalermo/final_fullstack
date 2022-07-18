@@ -3,7 +3,7 @@
     <div class="row">
         <q-card square class="shadow-24" style="width:400px;">
 
-			<q-card-section class="bg-orange-5">
+			<q-card-section class="bg-dorado">
 				<h4 class="text-h5 text-white q-my-md">{{ title }}</h4>        
 			</q-card-section>
 
@@ -139,7 +139,7 @@
 				<q-btn 
 					unelevated 
 					size="lg" 
-					color="secondary"
+					color="dorado"
 					@click="submit"
 					class="full-width text-white"
 					:label="btnLabel" />

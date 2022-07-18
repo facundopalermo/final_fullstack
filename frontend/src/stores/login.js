@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-
 import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
+
 
 export const useLoginStore = defineStore('login', {
-	setup(){
-		const $q = useQuasar()
-		const router = useRouter()
+
+	setup() {
+		const router = useRouter();
 	},
 
 	state: () => ({
@@ -43,7 +42,6 @@ export const useLoginStore = defineStore('login', {
 					withCredentials: false,
 					headers: {
 						'Content-Type': 'application/json',
-						'X-CSRFTOKEN': this.csrf_token,
 					}
 				}).catch((error) => {
 					if(error.response){
@@ -62,6 +60,10 @@ export const useLoginStore = defineStore('login', {
 					this.autor.last_login = data.data.last_login
 					this.autor.date_joined = data.data.date_joined
 					this.HTTPstatus = data.status;
+					sessionStorage.setItem('estado', 1)
+					sessionStorage.setItem('email', email)
+					sessionStorage.setItem('id', this.autor.id)
+					sessionStorage.setItem('pass', password)
 				} else {
 					this.HTTPstatus = data.status;
 				}
@@ -87,12 +89,21 @@ export const useLoginStore = defineStore('login', {
 				}
 			})
 
-			if(Array.isArray(data) && data.status == 201) {
+			if(data.status == 201) {
 				this.HTTPstatus = 201;
 			} else {
 				this.HTTPstatus = 400;
 			}
 
-		}
+		},
+		logout(){
+			axios.get('http://localhost:8000/logout/');
+			this.$reset()
+			sessionStorage.removeItem('estado')
+			sessionStorage.removeItem('id')
+			sessionStorage.removeItem('email')
+			sessionStorage.removeItem('pass')
+			this.router.push('/')
+		  }
 	}
 })

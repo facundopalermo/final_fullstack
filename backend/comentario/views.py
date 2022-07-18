@@ -8,7 +8,6 @@ from comentario.models import(
 
 class ComentarioViewSet(viewsets.ModelViewSet):
     """Comentario Resource"""
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset=Comentario.objects.all().order_by("code")
     serializer_class = ComentarioSerializer
 

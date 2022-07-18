@@ -33,8 +33,8 @@ class Comentario(models.Model):
         verbose_name_plural = "Comentarios"
 
 class ComentarioSerializer(serializers.ModelSerializer):
-
     autor = serializers.CharField(read_only=True)
+    autor_id = serializers.PrimaryKeyRelatedField(queryset=Autor.objects.all(), source="autor")
 
     class Meta:
         model = Comentario

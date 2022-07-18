@@ -11,7 +11,6 @@ from noticia.models import(
 
 class NoticiaViewSet(viewsets.ModelViewSet):
     """Noticia Resource"""
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Noticia.objects.all()
     serializer_class = NoticiaSerializer
 

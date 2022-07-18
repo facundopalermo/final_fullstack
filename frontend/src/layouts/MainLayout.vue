@@ -9,12 +9,12 @@
           </q-avatar>
           Noticias Doradas
         </q-toolbar-title>
+        <account-btn v-if="loginStore.autor.estado==1"/>
       </q-toolbar>
 
       <q-tabs align="left">
         <q-route-tab to="/" label="Portada" />
-        <q-route-tab to="/login" label="Iniciar sesión" v-if="loginStore.autor.estado==0"/>
-        <q-route-tab v-on:click="logout()" label="LogOut" v-else/>
+        <q-route-tab to="/login" label="Iniciar sesión" v-if="loginStore.autor.estado!=1"/>
       </q-tabs>
     </q-header>
 
@@ -36,8 +36,8 @@
 <script>
 import { defineComponent } from 'vue'
 import { useLoginStore } from 'src/stores/login'
-import axios from 'axios';
 
+import AccountBtn from 'components/AccountBtn.vue';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -52,14 +52,14 @@ export default defineComponent({
   },
 
   components: {
+    AccountBtn
   },
 
-  methods: {
-    logout(){
-      axios.get('http://localhost:8000/logout/');
-      this.loginStore.$reset();
+  beforeCreate(){
+    if(sessionStorage.getItem('estado')==1){
+      this.loginStore.login(sessionStorage.getItem('email'), sessionStorage.getItem('pass'))
     }
-  }
+  }, 
 
 })
 </script>
@@ -72,7 +72,7 @@ export default defineComponent({
 
 .q-toolbar__title {
   font-size: 50px;
-  color: #ffa726
+  color: #deb03f
 }
 
 .foot {

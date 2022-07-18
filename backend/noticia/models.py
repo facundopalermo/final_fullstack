@@ -30,7 +30,7 @@ class NoticiaSerializer(serializers.ModelSerializer):
     autor = serializers.CharField(read_only=True)
 
     #traigo los datos del autor
-    autores = AutorSerializer(read_only=True)
+    #autores = AutorSerializer(read_only=True)
 
     #recupero el id de autor
     autor_id = serializers.PrimaryKeyRelatedField(queryset=Autor.objects.all(), source="autor")
